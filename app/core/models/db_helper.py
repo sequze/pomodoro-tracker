@@ -32,7 +32,7 @@ class DatabaseHelper:
 
 
 db_helper = DatabaseHelper(
-    url=settings.db.url,
+    url=str(settings.db.url),
     echo=settings.db.echo,
     pool_size=settings.db.pool_size,
     max_overflow=settings.db.max_overflow,
