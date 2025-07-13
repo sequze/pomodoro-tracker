@@ -1,0 +1,19 @@
+services:
+  pg:
+    image: postgres # Используется официальный образ PostgreSQL
+    environment:
+      POSTGRES_DB: ${PG_NAME} # Создаем базу данных с именем data
+      POSTGRES_USER: ${PG_USER}
+      # Создаем пользователя с именем user и паролем password
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes: # Чтобы данные не терялись при пересоздании контейнера
+      [pg-data:/var/lib/postgresql/data]
+    ports:
+      - "${PG_PORT}:${PG_PORT}"
+volumes:
+  pg-data:
