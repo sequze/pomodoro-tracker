@@ -1,1 +1,1 @@
-from int_id_pk import IntIdPkMixin
+from .int_id_pk import IntIdPkMixin
