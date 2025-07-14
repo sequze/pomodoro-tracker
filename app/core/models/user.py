@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import TYPE_CHECKING
 
 from .base import Base
 from .mixins import IntIdPkMixin
@@ -8,11 +9,12 @@ class UserRole(str, Enum):
     customer="customer"
     admin="admin"
 
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from sqlalchemy.orm import Mapped, mapped_column
+
 class User(IntIdPkMixin, Base):
-    email: Mapped[str] = mapped_column(nullable=False, unique=True)
-    password_hash: Mapped[str] = mapped_column(nullable=False)
+    email: Mapped[str] = mapped_column(unique=True)
+    password_hash: Mapped[str]
     full_name: Mapped[str]
     role: Mapped[UserRole] = mapped_column(default=UserRole.customer)
     created_at: Mapped[datetime] = mapped_column(
