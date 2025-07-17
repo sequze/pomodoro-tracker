@@ -8,6 +8,8 @@ from .base import Base
 from .mixins import IntIdPkMixin
 from enum import Enum
 
+from .mixins.created_at import CreatedAtMixin
+
 if TYPE_CHECKING:
     from .user import User
     from .order_item import OrderItem
@@ -33,11 +35,9 @@ class OrderStatus(str, Enum):
     cancelled = "cancelled"
     refunded = "refunded"
 
-class Order(IntIdPkMixin, Base):
+class Order(CreatedAtMixin, IntIdPkMixin, Base):
     total_amount: Mapped[Decimal] = mapped_column(Numeric(10, 2))
     status: Mapped[OrderStatus]
-    created_at: Mapped[datetime] = mapped_column(
-        default=lambda: datetime.now(timezone.utc))
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     user: Mapped["User"] = relationship(back_populates="orders")
     items: Mapped[list["OrderItem"]] = relationship(back_populates="order")
