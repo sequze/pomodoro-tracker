@@ -10,6 +10,7 @@ __all__ = [
     "Product",
     "product_discount_association_table",
     "ProductImage",
+    "db_helper",
 ]
 
 from .cart_item import CartItem
@@ -20,5 +21,5 @@ from .order import Order
 from .order_item import OrderItem
 from .product import Product
 from .product_image import ProductImage
-
+from .db_helper import db_helper
 from .user import User
